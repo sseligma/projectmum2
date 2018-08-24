@@ -142,6 +142,10 @@ body.node-type-page h1.page-header {
   border:none;
 } 
 
+body.node-type-event h1.page-header {
+	display:none;
+}
+
 .view-display-id-page_past_mums .view-content {
 	text-align:center;
 }
