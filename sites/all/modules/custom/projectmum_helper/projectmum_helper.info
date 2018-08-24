@@ -1,0 +1,4 @@
+core = "7.x"
+description = "Helper module for Project MUM"
+name = "Project MUM"
+package = "Other"

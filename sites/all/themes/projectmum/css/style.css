@@ -1,0 +1,176 @@
+/**
+ * Place your custom styles here.
+ */
+@font-face { font-family: Arkitech; src: url('fonts/arkitech.bold.ttf'); } 
+
+body {
+    font-family: Sans, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #fff;
+    background-color: #000;
+}
+
+header#navbar {
+    font-family: Sans, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.5vw;
+    color: #fff;
+    background-color: #000;
+    border:none;
+    margin:0px 0px;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color:#fff;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  color:#fff;
+	background:transparent;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .active > a:hover {
+	background:transparent;
+  color:rgba(86, 183, 231,1);
+}
+
+
+body.page-home,
+body.node-type-event {
+  background:url('images/projectmum.powerlines_1920.jpg') no-repeat center center fixed;
+}
+
+body.page-past-mums {
+  background:url('images/past_mum_1920.jpg') no-repeat center center fixed;
+}
+
+body.page-node-20 {
+  background:url('images/participate.crowd_1920.jpg') no-repeat center center fixed;
+}
+
+body.page-node-22 {
+  background:url('images/about_mum_1920.jpg') no-repeat center center fixed;
+}
+
+article.node-event section {
+	margin-bottom:5vw;
+}
+
+article.node-event section#event-header {
+  margin-top:5vw;
+}
+
+.panel {
+	background-color:rgba(0,0,0,0.6);
+	border:none;
+	/*
+	border:2px solid rgba(86, 183, 231,1);
+	*/
+	border-radius:12px;
+}
+
+.panel-default > .panel-heading,
+.panel-default > .panel-body
+.panel-default > .panel-footer {
+  color: #fff;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.panel-footer {
+	background-color: transparent;
+  border-color: transparent;
+}
+
+article.node-event section#event-sponsors .panel {
+  background:rgba(255,255,255, 0.2)
+}
+
+article.node-event .panel-heading h2 {
+  font-size:2.5vw;
+  font-weight:bold;
+} 
+
+article.node-event section#event-header h2 {
+  font-size:2.5vw;
+  font-weight:bold;
+} 
+
+article.node-event .panel {
+  padding:2vw;
+}
+
+h2 .subtitle{
+	text-transform:uppercase;
+}
+
+article.node-event a,
+.view-display-id-page_past_mums a {
+  color:#fff;
+}
+
+article.node-event a:hover,
+.view-display-id-page_past_mums a:hover {
+  color:rgba(86, 183, 231,1);
+  text-decoration:none;
+}
+
+article.node-event .event-description {
+	font-size:1vw;
+}
+
+.dj-link {
+	font-size:18px;
+}
+
+body.page-past-mums .main-container .row,
+body.node-type-page .main-container .row {
+	background-color:rgba(0,0,0,0.6);
+  border:none;
+  border-radius:12px;
+  padding:2vw;
+  margin-top:5vw;
+}	
+
+
+body.page-past-mums h1.page-header,
+body.node-type-page h1.page-header {
+  font-size:2.5vw;
+  font-weight:bold;
+  text-align:center;
+  border:none;
+} 
+
+.view-display-id-page_past_mums .view-content {
+	text-align:center;
+}
+
+.view-display-id-page_past_mums h2 {
+  font-size: 2.5vh;
+}
+
+.view-display-id-page_past_mums .view-content ul {
+  list-style-type:none;
+  padding-left:0px;
+}
+
+.view-display-id-page_past_mums .view-content li {
+	font-size:1vw;
+}
+
+.view-display-id-page_past_mums .view-content li a:hover {
+  text-decoration:none;
+}
+
+.view-display-id-block_facebook_link {
+  display:inline-block;
+  margin-top:10px;	
+}
+
+i.facebook-link {
+  background: url('images/facebook.png') no-repeat;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+}

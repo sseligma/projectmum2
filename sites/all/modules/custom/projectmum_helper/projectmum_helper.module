@@ -1,0 +1,412 @@
+<?php
+
+/**
+ * Implements hook_field_extra_fields().
+ */
+function projectmum_helper_field_extra_fields() {  
+  $extra = array();
+  $extra['node']['event'] = array(
+  	'display' => array(
+  	  'event_header' => array(
+  		'label' => t('Event Header'),
+  		'description' => t('Event Header'),
+  		'weight' => 0,
+  		'type' => 'hidden'
+  	  ),
+  	  'map' => array(
+  		'label' => t('Map'),
+  		'description' => t('Map'),
+  		'weight' => 1,
+  		'type' => 'hidden'
+  	  ),
+  			
+      'event_date' => array(
+        'label' => t('Event Date'),
+        'description' => t('Event Date'),
+        'weight' => 10,
+      	'type' => 'hidden'
+      ),
+  	  'event_time' => array(
+  		'label' => t('Event Time'),
+  		'description' => t('Event Time'),
+  		'weight' => 0,
+  	  	'type' => 'hidden'	
+  	  ),
+  	  'djs' => array(
+  	    'label' => t('DJs'),
+  		'description' => t('Dj Sets, Sound and Visuals'),
+  		'weight' => 2,
+  		'type' => 'hidden'
+  	  ),
+  	  'sponsors' => array(
+  		'label' => t('Sponsors'),
+  		'description' => t('Sponsors'),
+  		'weight' => 3,
+  		'type' => 'hidden'
+  	  )
+  			
+  	)	
+  );
+  
+  return $extra;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function projectmum_helper_node_view($node, $view_mode, $langcode) {
+  switch ($node->type) {
+	case 'event':
+
+	  $node->content['event_header'] = array(
+		'#theme' => 'projectmum_helper_event_header',
+		'#node' => $node,
+		'#weight' => 0,
+		'#view_mode' => $view_mode
+	  );
+		
+	  $node->content['event_date'] = array(
+		'#theme' => 'projectmum_helper_event_date',
+		'#node' => $node,
+	    '#weight' => 0,
+		'#view_mode' => $view_mode
+	  );
+	  
+	  $node->content['event_time'] = array(
+	    '#theme' => 'projectmum_helper_event_time',
+	  	'#node' => $node,
+	  	'#weight' => 1,	  		
+	  	'#view_mode' => $view_mode
+	  );
+
+	  $node->content['map'] = array(
+	  		'#theme' => 'projectmum_helper_map',
+	  		'#node' => $node,
+	  		'#weight' => 0,
+	  		'#view_mode' => $view_mode
+	  );
+	  
+	  $node->content['djs'] = array(
+	  		'#theme' => 'projectmum_helper_djs',
+	  		'#node' => $node,
+	  		'#weight' => 0,
+	  		'#view_mode' => $view_mode
+	  );
+	  
+	  $node->content['sponsors'] = array(
+	  		'#theme' => 'projectmum_helper_sponsors',
+	  		'#node' => $node,
+	  		'#weight' => 0,
+	  		'#view_mode' => $view_mode
+	  );
+	  
+	break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function projectmum_helper_theme($existing, $type, $theme, $path) {
+	
+	// Declare the location of our theme templates.
+	$theme_dir = drupal_get_path('module', 'projectmum_helper') . '/theme';
+	
+	return array(
+			'projectmum_helper_event_header' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),
+			
+			'projectmum_helper_map' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),
+			
+			'projectmum_helper_event_date' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),
+			'projectmum_helper_event_time' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),
+			'projectmum_helper_djs' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),
+			
+			'projectmum_helper_sponsors' => array(
+					'variables' => array('node' => NULL, 'view_mode' => NULL),
+			),			
+			projectmum_event_header => array(
+			  'variables' => array(
+			    'node' => NULL,
+			  	'view_mode' => NULL
+			  ),
+			  'template' => 'projectmum-event-header',
+			  'path' => $theme_dir
+		  )
+	);
+}
+
+function theme_projectmum_helper_event_header($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$output = theme('projectmum_event_header', array('node' => $node));
+	return $output;
+}
+
+function theme_projectmum_helper_map($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$output = '	<section id="event-map">'
+    . '<div class="panel panel-default">'
+	. '<div class="panel-heading">'
+	. '<div class="panel-title">'
+	. '</div>'
+	. '<div class="panel-body">'
+	. _get_map_markup($node->location)
+	. '<div class="event-description">'
+	. $node->body[LANGUAGE_NONE][0]['value']
+	. '</div>'
+	. '</div>'
+	. '</div>'
+	. '</div>'
+	. '</div>';
+	return $output;
+}
+
+function theme_projectmum_helper_djs($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$djs = _get_djs($node);
+	//dpm($djs);
+	$output =
+	'<section id="event-djs" >'
+	. '<div class="panel panel-default">'				
+	. '<div class="panel-heading">'
+	. '<div class="panel-title">'
+	. '<h1>DJs</h1>'
+	. '</div>'
+	. '<div class="panel-body">';
+	foreach ($djs as $dj) {
+	  $output .= '<div class="dj">'	
+	  . '<div class="dj-time">' . $dj['time'] . ' ' . $dj['name'] . '<div>';
+	  
+	  foreach ($dj['links'] as $link) {
+	  	$output .= '<div class="dj-link"><a href="'. $link['url'] . '" target="_blank" >' . $link['title'] . '</a></div>'; 
+	  }
+	  $output .= '</div>';
+	}
+	
+	$output .= 
+	'</div>'
+	.'</div>'
+	. '</section>';
+	
+	return $output;
+}
+
+function theme_projectmum_helper_sponsors($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$sponsors = _get_sponsors($node);
+	//dpm($sponsors);
+	$output =
+	'<section id="event-sponsors">'
+	. '<div class="panel-heading">'
+	. '<div class="panel-title">'
+	. '<h1>Special thanks to:</h1>'
+	. '</div>'
+	. '<div class="panel-body">';
+	
+	if (count($sponsors['org'])) { 
+	  $col = 'col-lg-' . floor(12/count($sponsors['org']));
+	  $output .= 
+	  '<div class="container">'
+	  .'<div class="row">';
+	  
+	  foreach($sponsors['org'] as $org) {
+	  	$output .= '<div class="' . $col . '"><a href="' . $org['url'] . '" target="_blank" alt="' . $org['name'] . '" ><img class="img-responsive" src="' . $org['logo'] . '" /></a></div>';
+	  }
+	  $output .= 
+	  '</div>'
+	  .'</div>';		
+	}
+	
+	if (count($sponsors['business'])) {
+	  $col = 'col-lg-' . floor(12/count($sponsors['business']));
+		$output .=
+		'<div class="container">'
+		.'<div class="row">'
+		.'<h2>Support your Local Businesses!</h2>'		
+		.'</div>'
+		.'<div class="row">';
+						
+		foreach($sponsors['business'] as $business) {
+		  $output .= '<div class="' . $col . '"><a href="' . $business['url'] . '" target="_blank" alt="' . $business['name'] . '" ><img class="img-responsive" src="' . $business['logo'] . '" /></a></div>';
+		}
+		$output .=
+		'</div>'
+		.'</div>';
+	}
+		
+	$output .=
+	'</div>'
+	. '</div>'
+	. '</section>';
+	return $output;
+}
+
+
+function theme_projectmum_helper_event_date($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$output = '<div class="event-date">';
+	$output .= _convert_date($node->field_date,0,'value','F j Y');
+	$output .= '</div>';
+	
+	return $output;
+}
+
+function theme_projectmum_helper_event_time($variables){
+	$node = $variables['node'];
+	$view_mode = $variables['view_mode'];
+	$type = $node->type;
+	$nid = $node->nid;
+	
+	$output = '<div class="event-time">';
+	
+	$output .= _convert_date($node->field_date,0,'value','ga') . ' - ' . _convert_date($node->field_date,0,'value2','ga');
+	$output .= '</div>';
+	
+	return $output;
+}
+
+function projectmum_helper_process_page(&$variables) {
+	if(isset($variables['node']) && $variables['node']->type == 'event') {
+		$variables['title'] = NULL;
+	}
+}
+
+function _get_map_markup(&$location,$height=450,$width=600){
+  $api_key = variable_get('gmap_api_key','');
+  $lat = $location['latitude'];
+  $long = $location['longitude'];
+  return '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=' . $lat . '%2C' . $long . '&key=' . $api_key . '" allowfullscreen></iframe>'; 
+}
+
+function _get_djs(&$node) {
+  $djs = array();
+  $ids = array();
+  foreach ($node->field_dj_set[LANGUAGE_NONE] as $key => $value) {
+  	$ids[] = $value['value'];
+  }
+  $result = paragraphs_item_load_multiple($ids);
+  foreach($result as $key => $value) {
+  	//dpm($value);
+  	$cid = $value->field_dj[LANGUAGE_NONE][0]['target_id'];
+  	$c_node = node_load($cid);
+  	$dj = array(
+  	  'name' => $c_node->title,
+  	  'time' =>  _convert_date($value->field_date,0,'value','ga') . ' - ' . _convert_date($value->field_date,0,'value2','ga'),
+  	  'links' => array()
+  	);
+
+  	$num_links = count($c_node->field_link[LANGUAGE_NONE]);
+  	for ($i = 0; $i < $num_links; $i++) {
+  	  $dj['links'][] = array(
+  	  	'title' => $c_node->field_link[LANGUAGE_NONE][$i]['title'],
+  	  	'url' => $c_node->field_link[LANGUAGE_NONE][$i]['url'],
+  	  );		
+  	}
+  	$djs[] = $dj;
+  	
+  }
+  
+  return $djs;
+  
+}
+
+function _get_sponsors(&$node) {
+  $ctype_map = _get_vocab_map('contributor_type');
+
+  $sponsors = array(
+    'org' => array(),
+  	'business' => array()
+  );
+  
+  foreach ($node->field_sponsor[LANGUAGE_NONE] as $key => $value) {
+	$ids[] = $value['target_id'];
+  }
+  $c_nodes = node_load_multiple($ids);
+  
+  foreach ($c_nodes as $id => $c_node) {
+  	$sponsor = array(
+  	  'name' => $c_node->title,
+  	  'url' => $c_node->field_link[LANGUAGE_NONE][0]['url'],
+  	  'logo' => file_create_url($c_node->field_logo[LANGUAGE_NONE][0]['uri'])
+  	);
+  	
+  	if ($c_node->field_contributor_type[LANGUAGE_NONE][0]['tid'] == $ctype_map['Organization']) {
+  	  $sponsors['org'][] = $sponsor;	
+  	}
+  	elseif ($c_node->field_contributor_type[LANGUAGE_NONE][0]['tid'] == $ctype_map['Business']) {
+  		$sponsors['business'][] = $sponsor;		
+  	} 	
+  }
+  
+  return $sponsors;
+	
+}
+
+function _get_vocab_map($name){
+	$map = array();
+	$vocab = taxonomy_vocabulary_machine_name_load($name);
+	$vocab_terms = taxonomy_get_tree($vocab->vid, $parent = 0, NULL, TRUE);
+	$options = array();
+	
+	foreach ($vocab_terms as $t) {
+	  $map[strval($t->name)] = $t->tid;
+	}
+
+	return $map;
+	
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function projectmum_helper_block_info() {
+	$blocks = array();
+	$blocks['facebook_link'] = array(
+			'info' => t('Facebook Link for Current Event'),
+	);
+	return $blocks;
+}
+/**
+ * Implements hook_block_view().
+ */
+function projectmum_helper_block_view($delta = '') {
+	$block = array();
+	switch ($delta) {
+		case 'facebook_link':
+			$block['subject'] = '';
+			$block['content'] = '<a href="facebook.com"><i class="facebook-link" /></a>';
+		break;
+	}
+	return $block;
+}
+
+
