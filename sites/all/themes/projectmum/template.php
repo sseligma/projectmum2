@@ -41,7 +41,7 @@ function _get_djs(&$node) {
 				'links' => array()
 		);
 		
-		$num_links = count($c_node->field_link[LANGUAGE_NONE]);
+		$num_links = isset($c_node->field_link[LANGUAGE_NONE])?count($c_node->field_link[LANGUAGE_NONE]):0;
 		for ($i = 0; $i < $num_links; $i++) {
 			$dj['links'][] = array(
 					'title' => $c_node->field_link[LANGUAGE_NONE][$i]['title'],

@@ -167,6 +167,12 @@ body.node-type-event h1.page-header {
   text-decoration:none;
 }
 
+#block-views-event-block-facebook-link {
+	display: inline-block;
+  height: 30px;
+  width: 30px;
+}
+
 .view-display-id-block_facebook_link {
   display:inline-block;
   margin-top:10px;	
