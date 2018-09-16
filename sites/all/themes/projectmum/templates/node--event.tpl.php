@@ -154,9 +154,14 @@ $webmaster = _get_contributor($node,'field_webmaster');
       <h2>Sound: <a href="<?php print $sound[0]['links'][0]['url']; ?>"><?php print $sound[0]['name']; ?></a></h2>
       <?php } ?>      
 
-      <?php if(count($visuals)) { ?>
-      <h2>Visuals: <a href="<?php isset($visuals[0]['links'])?print $visuals[0]['links'][0]['url']:"#"; ?>"><?php print $visuals[0]['name']; ?></a></h2>
-      <?php } ?> 
+      <?php if(count($visuals)) {       	
+      	if (isset($visuals[0]['links'])) { 
+      	  print '<h2>Visuals: <a href="' . $visuals[0]['links'][0]['url'] . '" >' . $visuals[0]['name'] . '</a></h2>';
+      	}
+      	else { 
+      	  print '<h2>Visuals: ' . $visuals[0]['name'] . '</h2>';
+      	}
+      } ?>
     </div>
   </div>
 </section>
