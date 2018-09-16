@@ -155,7 +155,7 @@ $webmaster = _get_contributor($node,'field_webmaster');
       <?php } ?>      
 
       <?php if(count($visuals)) { ?>
-      <h2>Visuals: <a href="<?php print $visuals[0]['links'][0]['url']; ?>"><?php print $visuals[0]['name']; ?></a></h2>
+      <h2>Visuals: <a href="<?php isset($visuals[0]['links'])?print $visuals[0]['links'][0]['url']:"#"; ?>"><?php print $visuals[0]['name']; ?></a></h2>
       <?php } ?> 
     </div>
   </div>
