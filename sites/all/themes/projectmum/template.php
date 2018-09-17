@@ -37,7 +37,7 @@ function _get_djs(&$node) {
 		$c_node = node_load($cid);
 		$dj = array(
 				'name' => $c_node->title,
-				'time' =>  _convert_date($value->field_date,0,'value','ga') . ' - ' . _convert_date($value->field_date,0,'value2','ga'),
+				'time' =>  _convert_date($value->field_date,0,'value','g:ia') . ' - ' . _convert_date($value->field_date,0,'value2','g:ia'),
 				'links' => array()
 		);
 		
