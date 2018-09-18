@@ -22,6 +22,15 @@ function _get_map_markup(&$location,$height=450,$width=600){
 	return '<iframe width="800" height="600" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=' . $lat . '%2C' . $long . '&key=' . $api_key . '" allowfullscreen></iframe>';
 }
 
+function _get_event_time(&$node) {
+  $start_min = _convert_date($node->field_date,0,'value','i');
+  $start_format = $start_min == '00'?'ga':'g:ia';
+  $end_min = _convert_date($node->field_date,0,'value2','i');
+  $end_format = $end_min == '00'?'ga':'g:ia';
+  
+  return _convert_date($node->field_date,0,'value',$start_format) . ' - ' . _convert_date($node->field_date,0,'value2',$end_format);
+}
+
 function _get_djs(&$node) {
   $djs = array();
 	

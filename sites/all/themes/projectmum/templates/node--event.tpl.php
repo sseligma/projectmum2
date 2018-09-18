@@ -107,7 +107,7 @@ $webmaster = _get_contributor($node,'field_webmaster');
 	<div class="panel-body">
 	    <h2 class="text-center">
 	    <div class="event-date"><?php print _convert_date($node->field_date,0,'value','F j Y'); ?></div>
-        <div class="event-time"><?php print _convert_date($node->field_date,0,'value','ga') . ' - ' . _convert_date($node->field_date,0,'value2','ga'); ?></div>
+        <div class="event-time"><?php print  _get_event_time($node); ?></div>
 		<?php if (isset($node->field_donation) && $node->field_donation[LANGUAGE_NONE][0]['value'] > 0) { ?>
 	    <div class="donation">Suggested Donation $<?php print $node->field_donation[LANGUAGE_NONE][0]['value']; ?></div>			
 	    <?php } ?> 
